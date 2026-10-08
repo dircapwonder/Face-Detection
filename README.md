@@ -34,8 +34,6 @@ face-detection/
 
 ├── single_face_detect.py
 
-├── multiple_face_detect.py
-
 └── README.md
 
 The first example uses the Haar Cascade file included with OpenCV. The second example expects haarcascade_frontalface_default.xml to be located in the project directory.
