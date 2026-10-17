@@ -1,271 +1,110 @@
-# OpenCV Face Detection with Haar Cascade
+# Face Detection with OpenCV
 
-A simple face detection project built with **Python** and **OpenCV** using the Haar Cascade Classifier.
-
-This project contains two examples:
-
-- Detecting faces in a single image
-- Detecting faces in multiple **.jpg** images automatically
+A simple face detection project built with **Python** and **OpenCV** using the Haar Cascade classifier. It comes with two scripts: one that detects faces in a single image, and one that processes every `.jpg` image in the folder.
 
 ## Features
-- Face detection using OpenCV
-- Haar Cascade Classifier
-- Grayscale image processing
-- Detection of multiple faces
-- Drawing bounding boxes around detected faces
-- Automatic processing of multiple images
+
+- Face detection with OpenCV's pre-trained Haar Cascade classifier
+- Detects multiple faces in one image (portraits and group photos)
+- Draws a bounding box around every detected face
+- Batch mode that goes through all `.jpg` files in the project folder automatically
+
+## Project Structure
+
+```text
+Face-Detection/
+├── single_face_detect.py                  # Detects faces in one image
+├── multiple_face_detect.py                # Detects faces in all .jpg images in the folder
+├── haarcascade_frontalface_default.xml    # Haar Cascade classifier for frontal faces
+├── 1.jpg ... 7.jpg                        # Sample images
+└── README.md
+```
 
 ## Requirements
 
-Make sure you have **Python 3.x** installed.
+- Python 3.8+
+- OpenCV
 
-Install OpenCV with:
-```
+```bash
 pip install opencv-python
 ```
-## Project Structure
-```
-face-detection/
-│
-├── 1.jpg
-├── haarcascade_frontalface_default.xml
-├── single_face_detect.py
-└── README.md
+
+## Usage
+
+### Single image
+
+```bash
+python single_face_detect.py
 ```
 
-The first example uses the Haar Cascade file included with OpenCV. The second example expects haarcascade_frontalface_default.xml to be located in the project directory.
+The script reads `5.jpg`, detects the faces in it, draws a box around each one, and shows the result in a window. Press any key to close the window. To use another image, change the file name in this line of the script:
 
-# 1. Face Detection in a Single Image
-
-The first example reads an image named 1.jpg and detects faces using the Haar Cascade Classifier.
-```
-import cv2
-```
-### Load the cascade classifier for face detection
-```
-face_cascade = cv2.CascadeClassifier(
-    cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'
-)
-```
-### Read the input image
-```
-img = cv2.imread('1.jpg')
-```
-### Convert the image to grayscale
-```
-gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-```
-### Detect faces of different sizes in the input image
-```
-faces = face_cascade.detectMultiScale(
-    gray,
-    scaleFactor=1.1,
-    minNeighbors=5
-)
-```
-### Draw a rectangle around each detected face
-```
-for (x, y, w, h) in faces:
-    cv2.rectangle(
-        img,
-        (x, y),
-        (x + w, y + h),
-        (255, 255, 0),
-        2
-    )
-```
-### Display the result
-```
-cv2.imshow('img', img)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
-```
-### Run the Example
-
-Save the code as `single_face_detect`.py and run:
-
-`python single_face_detect.py`
-
-The program will detect faces in 1.jpg and draw a rectangle around each detected face.
-
-# 2. Face Detection in Multiple Images
-
-The second example automatically finds all .jpg images in the current directory and detects faces in each image.
-```
-import cv2
-import glob
-```
-## Find all JPG images in the current directory
-```
-all_images = glob.glob("*.jpg")
-```
-## Load the Haar Cascade classifier
-```
-detect = cv2.CascadeClassifier(
-    "haarcascade_frontalface_default.xml"
-)
-
-for image in all_images:
-
-    # Read the image
-    img = cv2.imread(image)
-
-    # Convert the image to grayscale
-    gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-
-    # Detect faces
-    faces = detect.detectMultiScale(
-        gray_img,
-        1.1,
-        5
-    )
-
-    # Draw rectangles around detected faces
-    for (x, y, w, h) in faces:
-        final_img = cv2.rectangle(
-            img,
-            (x, y),
-            (x + w, y + h),
-            (255, 255, 0),
-            2
-        )
-
-    # Display the result
-    cv2.imshow("Detected Faces", final_img)
-    cv2.waitKey(2000)
-    cv2.destroyAllWindows()
-```
-## Example Directory
-
-Your project directory can look like this:
-```
-face-detection/
-│
-├── image1.jpg
-├── image2.jpg
-├── image3.jpg
-├── haarcascade_frontalface_default.xml
-├── multiple_face_detect.py
-└── README.md
+```python
+img = cv2.imread('5.jpg')
 ```
 
-Run the program with:
-```
+### Multiple images
+
+```bash
 python multiple_face_detect.py
 ```
 
-Each image will be displayed for **2 seconds** with detected faces highlighted by rectangles.
+The script finds all `.jpg` files in the current folder, runs the detection on each one, and shows every result for 2 seconds. This script loads `haarcascade_frontalface_default.xml` from the project folder, so keep the file next to the script.
 
-## How Does It Work?
+> **Note:** `cv2.imshow` opens a window, so both scripts need a desktop environment. They will not display anything on a headless server.
 
-The project uses OpenCV's **Haar Cascade Classifier** for face detection.
+## How It Works
 
-The classifier analyzes the image at different scales and searches for patterns that resemble human faces.
+1. The image is read with `cv2.imread()` and converted to grayscale with `cv2.cvtColor()`, since the classifier works on grayscale images.
+2. `detectMultiScale()` scans the image at several scales and returns the position and size `(x, y, w, h)` of every region that looks like a face.
+3. `cv2.rectangle()` draws a box around each detected face.
+4. `cv2.imshow()` displays the result.
 
-The following classifier is used:
+### Detection parameters
 
-`haarcascade_frontalface_default.xml`
-
-
-It is designed primarily for detecting **frontal human faces.**
-
-# Key Functions
-### cv2.imread()
-
-Reads an image from a file.
-```
-img = cv2.imread("1.jpg")
-```
-### cv2.cvtColor()
-
-Converts an image from one color space to another.
-
-In this project, images are converted to grayscale:
-
-```
-gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-```
-### detectMultiScale()
-
-Detects objects, such as faces, at multiple scales.
-```
-faces = face_cascade.detectMultiScale(
-    gray,
-    scaleFactor=1.1,
-    minNeighbors=5
-)
-```
-### cv2.rectangle()
-
-Draws a rectangle around a detected face.
-```
-cv2.rectangle(
-    img,
-    (x, y),
-    (x + w, y + h),
-    (255, 255, 0),
-    2
-)
-```
-### cv2.imshow()
-
-Displays an image in a window.
-```
-cv2.imshow("Detected Faces", img)
-```
-### glob.glob()
-
-Finds files matching a specific pattern.
-```
-all_images = glob.glob("*.jpg")
-```
-### Understanding detectMultiScale()
-The following code:
-```
-detectMultiScale(gray, 1.1, 5)
-```
-is equivalent to:
-```
-detectMultiScale(
-    gray,
-    scaleFactor=1.1,
-    minNeighbors=5
-)
-```
-### scaleFactor
-
-Controls how much the image size is reduced at each scale.
-```
-1.1
-```
-A smaller value can improve detection accuracy but may increase processing time.
-
-### minNeighbors
-
-Determines how many neighboring detections are required for a region to be considered a face.
-```
-5
+```python
+faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5)
 ```
 
-Increasing this value can reduce false positives, but it may also cause some real faces to be missed.
+| Parameter | Value | Meaning |
+|---|---|---|
+| `scaleFactor` | `1.1` | How much the image is shrunk at each scale. Smaller values can find more faces but are slower. |
+| `minNeighbors` | `5` | How many neighboring detections are needed to accept a face. Higher values reduce false positives but may miss real faces. |
 
-### Supported Image Formats
+## Example Results
 
-The multiple-image example currently searches for .jpg files:
-```
-glob.glob("*.jpg")
-```
-You can add support for other formats such as PNG:
-```
-all_images = glob.glob("*.jpg") + glob.glob("*.png")
-```
+With the default settings, the included sample images give these results:
 
-## Technologies Used
-- Python
-- OpenCV
-- Haar Cascade Classifier
+| Image type | Result |
+|---|---|
+| Portraits (`1.jpg` to `5.jpg`) | One face detected in each image |
+| Group photo (`6.jpg`) | 6 of the 7 faces detected |
+| Group photo (`7.jpg`) | 4 of the 5 faces detected |
 
-## License
-This project was created for educational and learning purposes.
+## Limitations
 
-***Python • OpenCV • Computer Vision • Face Detection • Haar Cascade***
+- Haar Cascades work best on **frontal, well-lit faces**. Faces that are turned, tilted, or partly covered (for example by hair or hands) can be missed, as the group photos show.
+- The classifier can sometimes mark non-face regions as faces. Adjusting `minNeighbors` helps.
+- `multiple_face_detect.py` only looks for `.jpg` files. To include PNG files as well, change the search line to:
+
+  ```python
+  all_images = glob.glob("*.jpg") + glob.glob("*.png")
+  ```
+
+- In `multiple_face_detect.py`, an image with no detected faces can show the previous image's result, because the result variable is only updated when a face is found.
+
+## Ideas for Improvement
+
+- Save the annotated images to a folder instead of only displaying them
+- Take the image path as a command-line argument
+- Fix the no-face case in the multiple-image script
+- Try a deep-learning detector (such as OpenCV's DNN module) for better accuracy
+- Add real-time detection from a webcam
+
+## Credits
+
+- Face detection with [OpenCV](https://opencv.org/). The Haar Cascade file `haarcascade_frontalface_default.xml` is distributed with OpenCV and keeps its original license notice.
+
+## Disclaimer
+
+This project is for educational and learning purposes only. The sample images are used for demonstration and belong to their respective copyright holders. Replace them with your own images if you reuse this project.
