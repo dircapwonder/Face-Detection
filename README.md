@@ -37,10 +37,10 @@ pip install opencv-python
 python single_face_detect.py
 ```
 
-The script reads `5.jpg`, detects the faces in it, draws a box around each one, and shows the result in a window. Press any key to close the window. To use another image, change the file name in this line of the script:
+The script reads `1.jpg`, detects the faces in it, draws a box around each one, and shows the result in a window. Press any key to close the window. To use another image, change the file name in this line of the script:
 
 ```python
-img = cv2.imread('5.jpg')
+img = cv2.imread('1.jpg')
 ```
 
 ### Multiple images
