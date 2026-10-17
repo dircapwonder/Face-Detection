@@ -24,17 +24,14 @@ Install OpenCV with:
 pip install opencv-python
 ```
 ## Project Structure
+```
 face-detection/
-
 │
-
 ├── 1.jpg
-
 ├── haarcascade_frontalface_default.xml
-
 ├── single_face_detect.py
-
 └── README.md
+```
 
 The first example uses the Haar Cascade file included with OpenCV. The second example expects haarcascade_frontalface_default.xml to be located in the project directory.
 
@@ -141,23 +138,16 @@ for image in all_images:
 ## Example Directory
 
 Your project directory can look like this:
-
+```
 face-detection/
-
 │
-
 ├── image1.jpg
-
 ├── image2.jpg
-
 ├── image3.jpg
-
 ├── haarcascade_frontalface_default.xml
-
 ├── multiple_face_detect.py
-
 └── README.md
-
+```
 
 Run the program with:
 ```
