@@ -113,7 +113,3 @@ This project is licensed under the [MIT License](LICENSE). The Haar Cascade clas
 ## Disclaimer
 
 This project only detects faces in images. It does not identify people. Detection results can be wrong, so do not rely on it for security or any critical purpose. Only use it on images you have the right to use, and respect other people's privacy.
-
-## Disclaimer
-
-This project is for educational and learning purposes only. The sample images are used for demonstration and belong to their respective copyright holders. Replace them with your own images if you reuse this project.
