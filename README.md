@@ -17,6 +17,7 @@ Face-Detection/
 ├── multiple_face_detect.py                # Detects faces in all .jpg images in the folder
 ├── haarcascade_frontalface_default.xml    # Haar Cascade classifier for frontal faces
 ├── 1.jpg ... 7.jpg                        # Sample images
+├── LICENSE                                # MIT License
 └── README.md
 ```
 
@@ -104,6 +105,14 @@ With the default settings, the included sample images give these results:
 ## Credits
 
 - Face detection with [OpenCV](https://opencv.org/). The Haar Cascade file `haarcascade_frontalface_default.xml` is distributed with OpenCV and keeps its original license notice.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE). The Haar Cascade classifier it uses comes from OpenCV and is covered by OpenCV's own license.
+
+## Disclaimer
+
+This project only detects faces in images. It does not identify people. Detection results can be wrong, so do not rely on it for security or any critical purpose. Only use it on images you have the right to use, and respect other people's privacy.
 
 ## Disclaimer
 
